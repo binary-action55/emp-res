@@ -15,6 +15,8 @@ const errorRoutes = require(path.join(rootDirectory, "routes", "error"));
 const User = require(path.join(rootDirectory,'model','user'));
 const Employee = require(path.join(rootDirectory,'model','employee'));
 
+//Middleware
+const userAuthorization = require(path.join(rootDirectory,'middleware','authorization'));
 
 const app = express();
 
@@ -23,13 +25,14 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 
 app.use("/user", userRoutes);
-app.use("/employee", employeeRoutes);
+app.use("/employee", userAuthorization.authorize,employeeRoutes);
 app.use("/", errorRoutes);
 
-Employee.belongsTo(Employee,{foriegnKey:'id',as: 'Manager'});
+Employee.belongsTo(Employee,{foreignKey:'managerId',targetKey:"id",contraints:true,onDelete:'SET NULL'});
 
 sequelize.sync()
   .then(() => {
+    //Employee.destroy({where:{id:4}})
     app.listen(3000);
   })
   .catch((err) => {

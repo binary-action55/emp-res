@@ -13,6 +13,11 @@ const Employee = sequelize.define('Employee',{
         type:Sequelize.STRING,
         allowNull:false,
     },
+    socialSecurity:{
+        type:Sequelize.STRING,
+        allowNull:false,
+        unique:true,
+    },
     salary:{
         type:Sequelize.INTEGER,
         allowNull:false,
@@ -21,6 +26,9 @@ const Employee = sequelize.define('Employee',{
         type:Sequelize.STRING,
         allowNull:false,
     },
+    managerId:{
+        type:Sequelize.INTEGER,
+    }
 });
 
 module.exports = Employee;
