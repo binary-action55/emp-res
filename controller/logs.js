@@ -52,7 +52,7 @@ module.exports.getEmployeeLogs = async (req,res,next) =>{
     }
 
     try{
-        const logs = await Log.findAll({wherer:{employeeId}});
+        const logs = await Log.findAll({where:{employeeId}});
         return res.status(200).json({logs})
     }catch(err){
         console.log(err);

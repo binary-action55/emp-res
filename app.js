@@ -11,6 +11,7 @@ const userRoutes = require(path.join(rootDirectory, "routes", "user"));
 const employeeRoutes = require(path.join(rootDirectory, "routes", "employee"));
 const errorRoutes = require(path.join(rootDirectory, "routes", "error"));
 const logRoutes = require(path.join(rootDirectory, "routes", "logs"));
+const leaveRoutes = require(path.join(rootDirectory, "routes", "leave"));
 
 //Models
 const User = require(path.join(rootDirectory,'model','user'));
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use("/user", userRoutes);
 app.use("/employee", userAuthorization.authorize,employeeRoutes);
 app.use("/log", userAuthorization.authorize,logRoutes);
+app.use("/leave", userAuthorization.authorize,leaveRoutes);
 app.use("/", errorRoutes);
 
 Employee.belongsTo(Employee,{foreignKey:'managerId',targetKey:"id",contraints:true,onDelete:'SET NULL'});
